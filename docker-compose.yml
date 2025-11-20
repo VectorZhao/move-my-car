@@ -1,6 +1,7 @@
 services:
   api:
     image: vectorzhao/move-my-car-api:latest
+    container_name: move-my-car-api
     env_file:
       - .env
     volumes:
@@ -11,6 +12,7 @@ services:
 
   web:
     image: vectorzhao/move-my-car-web:latest
+    container_name: move-my-car-web
     depends_on:
       - api
     env_file:
