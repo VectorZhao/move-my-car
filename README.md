@@ -27,7 +27,7 @@ move-my-car/
    cp .env.example .env
    mkdir -p data
    ```
-   `.env` 放在仓库根目录即可同时被 API 和前端使用。必需字段：`DATABASE_URL`（Prisma 连接，默认 `./data/move-my-car.db`）、`JWT_SECRET` 和管理员初始账号/密码。`PORT`、`CLIENT_URL`、`WEB_PORT` 可留空使用默认 4000/5200。
+   `.env` 放在仓库根目录即可同时被 API 和前端使用。必需字段：`DATABASE_URL`（Docker 默认：`file:/app/data/move-my-car.db`；本地开发可用 `file:./data/move-my-car.db`）、`JWT_SECRET` 和管理员初始账号/密码。`PORT`、`CLIENT_URL`、`WEB_PORT` 可留空使用默认 4000/5200。
 
 2. **启动服务（自动迁移+种子）**
    ```bash
@@ -87,6 +87,6 @@ npm run dev
 - 新增 Webhook / IFTTT 连接，联动门禁或广播系统。
 - 引入多组织/多停车场配置，支持更复杂的权限模型。
 
-> 数据默认会生成在 `./data/move-my-car.db`，请自行做好备份或挂载到持久化存储。
+> Docker 部署默认数据在容器内 `/app/data/move-my-car.db`（挂载到当前目录的 `./data`），本地开发可用 `file:./data/move-my-car.db`，请做好备份或挂载到持久化存储。
 
 祝你部署顺利 🚗💨
