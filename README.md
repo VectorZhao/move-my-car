@@ -27,12 +27,13 @@ move-my-car/
    cp .env.example .env
    mkdir -p data
    ```
-   `.env` 放在仓库根目录即可同时被 API 和前端使用，可修改其中的 `JWT_SECRET`、`ADMIN_USERNAME`、`ADMIN_PASSWORD` 等字段确保安全。
+   `.env` 放在仓库根目录即可同时被 API 和前端使用。必需字段：`DATABASE_URL`（Prisma 连接，默认 `./data/move-my-car.db`）、`JWT_SECRET` 和管理员初始账号/密码。`PORT`、`CLIENT_URL`、`WEB_PORT` 可留空使用默认 4000/5200。
 
 2. **启动服务**
    ```bash
    docker compose up --build -d
    ```
+   需要改端口时可在 `.env` 设置 `PORT`（API）和 `WEB_PORT`（前端映射端口），`docker-compose.yml` 会自动应用。
 
 3. **初始化数据库**（首次部署）
    ```bash

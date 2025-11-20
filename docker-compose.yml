@@ -3,13 +3,10 @@ services:
     image: vectorzhao/move-my-car-api:latest
     env_file:
       - .env
-    environment:
-      DATABASE_URL: file:/app/data/move-my-car.db
-      CLIENT_URL: http://localhost:5200
     volumes:
       - ./data:/app/data
     ports:
-      - '4000:4000'
+      - '${PORT:-4000}:${PORT:-4000}'
 
   web:
     image: vectorzhao/move-my-car-web:latest
@@ -18,4 +15,4 @@ services:
     env_file:
       - .env
     ports:
-      - '5200:5200'
+      - '${WEB_PORT:-5200}:5200'
