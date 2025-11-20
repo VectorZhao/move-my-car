@@ -35,6 +35,10 @@ const UserDashboard = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
+  const toggleField = (field: 'notifyEnabled' | 'callEnabled', value: boolean) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
   useEffect(() => {
     const load = async () => {
       try {
@@ -193,17 +197,11 @@ const UserDashboard = () => {
             </label>
             <label>
               <span>消息通知</span>
-              <select value={form.notifyEnabled ? 'on' : 'off'} onChange={(e) => setForm((prev) => ({ ...prev, notifyEnabled: e.target.value === 'on' }))}>
-                <option value="on">开启</option>
-                <option value="off">关闭</option>
-              </select>
+              <div onClick={() => toggleField('notifyEnabled', !form.notifyEnabled)} className={`switch ${form.notifyEnabled ? 'on' : ''}`} role="button" aria-label="消息通知开关" />
             </label>
             <label>
               <span>电话通知</span>
-              <select value={form.callEnabled ? 'on' : 'off'} onChange={(e) => setForm((prev) => ({ ...prev, callEnabled: e.target.value === 'on' }))}>
-                <option value="on">开启</option>
-                <option value="off">关闭</option>
-              </select>
+              <div onClick={() => toggleField('callEnabled', !form.callEnabled)} className={`switch ${form.callEnabled ? 'on' : ''}`} role="button" aria-label="电话通知开关" />
             </label>
             {error && (
               <div style={{ gridColumn: '1 / -1', color: '#ff6b81' }}>{error}</div>
@@ -292,17 +290,19 @@ const UserDashboard = () => {
                   <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                     <button
                       type="button"
-                      style={{ flex: 1, minWidth: '120px', padding: '0.35rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', background: vehicle.notifyEnabled ? 'rgba(0, 199, 111, 0.2)' : 'transparent', color: '#fff' }}
+                      style={{ flex: 1, minWidth: '120px', padding: '0.35rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                       onClick={() => handleToggle(vehicle, 'notifyEnabled')}
                     >
-                      {vehicle.notifyEnabled ? '关闭通知' : '开启通知'}
+                      <span>{vehicle.notifyEnabled ? '关闭通知' : '开启通知'}</span>
+                      <div className={`switch ${vehicle.notifyEnabled ? 'on' : ''}`} />
                     </button>
                     <button
                       type="button"
-                      style={{ flex: 1, minWidth: '120px', padding: '0.35rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', background: vehicle.callEnabled ? 'rgba(45, 156, 219, 0.2)' : 'transparent', color: '#fff' }}
+                      style={{ flex: 1, minWidth: '120px', padding: '0.35rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                       onClick={() => handleToggle(vehicle, 'callEnabled')}
                     >
-                      {vehicle.callEnabled ? '关闭电话' : '开启电话'}
+                      <span>{vehicle.callEnabled ? '关闭电话' : '开启电话'}</span>
+                      <div className={`switch ${vehicle.callEnabled ? 'on' : ''}`} />
                     </button>
                   </div>
                 </div>
