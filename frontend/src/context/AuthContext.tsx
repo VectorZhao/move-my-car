@@ -9,6 +9,7 @@ interface AuthState {
   logout: () => void;
   isAuthenticated: boolean;
   hasRole: (role: Role) => boolean;
+  initialized: boolean;
 }
 
 const sessionKey = 'mmc_session_v1';
@@ -18,6 +19,7 @@ const AuthContext = createContext<AuthState | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem(sessionKey);
@@ -27,6 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(parsed.user);
       attachToken(parsed.token);
     }
+    setInitialized(true);
   }, []);
 
   const login = (payload: AuthResponse) => {
@@ -53,7 +56,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         login,
         logout,
         isAuthenticated: Boolean(token),
-        hasRole
+        hasRole,
+        initialized
       }}
     >
       {children}

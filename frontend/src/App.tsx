@@ -7,8 +7,12 @@ import { useAuth } from './context/AuthContext';
 import { Role } from './types';
 
 const ProtectedRoute: React.FC<{ children: JSX.Element; role?: Role }> = ({ children, role }) => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, initialized } = useAuth();
   const location = useLocation();
+
+  if (!initialized) {
+    return null;
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace state={{ from: location }} />;
@@ -22,7 +26,8 @@ const ProtectedRoute: React.FC<{ children: JSX.Element; role?: Role }> = ({ chil
 };
 
 const HomeRedirect = () => {
-  const { user } = useAuth();
+  const { user, initialized } = useAuth();
+  if (!initialized) return null;
   if (!user) return <Navigate to="/login" replace />;
   return <Navigate to={user.role === 'ADMIN' ? '/admin' : '/dashboard'} replace />;
 };
