@@ -103,7 +103,7 @@ const PublicVehiclePage = () => {
   return (
     <div className="main-content">
       <div className="glass-card" style={{ width: '100%', maxWidth: 520 }}>
-        <p style={{ letterSpacing: '0.3em', color: '#8f9ff5', textTransform: 'uppercase', fontSize: '0.75rem', marginBottom: '0.4rem' }}>Move My Car</p>
+        <p style={{ letterSpacing: '0.3em', color: '#8f9ff5', textTransform: 'uppercase', fontSize: '0.75rem', marginBottom: '0.4rem' }}>🚗 MOVE MY CAR</p>
         <h2 style={{ margin: 0 }}>{vehicle.carPlate}</h2>
         {vehicle.label && <p style={{ marginTop: '0.4rem', color: 'rgba(255,255,255,0.7)' }}>{vehicle.label}</p>}
         <p style={{ color: 'rgba(255,255,255,0.8)' }}>如需挪车，请使用以下方式通知车主。</p>
@@ -133,7 +133,7 @@ const PublicVehiclePage = () => {
         {feedback && <div style={{ marginTop: '0.8rem', color: 'rgba(255,255,255,0.9)' }}>{feedback}</div>}
 
         <p style={{ marginTop: '1.5rem', fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}>
-          本服务由 Move My Car 提供。<br />
+          本服务由 🚗 Move My Car 提供。<br />
           <Link to="/login" style={{ color: '#9fe5ff' }}>我是车主</Link>
         </p>
       </div>

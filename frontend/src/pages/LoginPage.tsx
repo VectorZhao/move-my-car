@@ -40,7 +40,7 @@ const LoginPage: React.FC<{ mode?: LoginMode }> = ({ mode = 'user' }) => {
     <div className="main-content">
       <div className="glass-card" style={{ width: '100%', maxWidth: 420 }}>
         <p style={{ letterSpacing: '0.4em', color: '#8f9ff5', textTransform: 'uppercase', fontSize: '0.75rem', marginBottom: '0.4rem' }}>
-          Move My Car
+          🚗 MOVE MY CAR
         </p>
         <h2 style={{ marginTop: 0 }}>{isAdminMode ? '管理员登录' : '欢迎回来'}</h2>
         <p style={{ color: 'rgba(255,255,255,0.7)' }}>
