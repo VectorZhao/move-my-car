@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { AuthResponse, UserProfile, Role } from '../types';
 import { attachToken } from '../api/client';
+import api from '../api/client';
 
 interface AuthState {
   token: string | null;
@@ -12,7 +13,7 @@ interface AuthState {
   initialized: boolean;
 }
 
-const sessionVersion = import.meta.env.VITE_SESSION_VERSION ?? 'v2';
+const sessionVersion = import.meta.env.VITE_SESSION_VERSION ?? 'v3';
 const sessionKey = `mmc_session_${sessionVersion}`;
 
 const AuthContext = createContext<AuthState | undefined>(undefined);
@@ -29,13 +30,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       .forEach((key) => localStorage.removeItem(key));
 
     const saved = localStorage.getItem(sessionKey);
-    if (saved) {
-      const parsed = JSON.parse(saved) as AuthResponse;
-      setToken(parsed.token);
-      setUser(parsed.user);
-      attachToken(parsed.token);
-    }
-    setInitialized(true);
+    const loadSession = async () => {
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved) as AuthResponse;
+          setToken(parsed.token);
+          setUser(parsed.user);
+          attachToken(parsed.token);
+          await api.get('/auth/me');
+        } catch {
+          localStorage.removeItem(sessionKey);
+          setToken(null);
+          setUser(null);
+          attachToken(null);
+        }
+      }
+      setInitialized(true);
+    };
+
+    loadSession();
   }, []);
 
   const login = (payload: AuthResponse) => {
