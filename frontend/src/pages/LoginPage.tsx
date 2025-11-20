@@ -11,6 +11,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const message = (location.state as { message?: string } | undefined)?.message;
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -46,6 +47,7 @@ const LoginPage = () => {
             <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" autoComplete="current-password" required />
           </label>
           {error && <div style={{ color: '#ff6b81' }}>{error}</div>}
+          {message && <div style={{ color: 'rgba(255,255,255,0.7)' }}>{message}</div>}
           <button className="primary" disabled={loading} type="submit">
             {loading ? '正在登录...' : '进入系统'}
           </button>

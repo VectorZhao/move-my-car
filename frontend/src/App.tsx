@@ -7,7 +7,7 @@ import { useAuth } from './context/AuthContext';
 import { Role } from './types';
 
 const ProtectedRoute: React.FC<{ children: JSX.Element; role?: Role }> = ({ children, role }) => {
-  const { isAuthenticated, user, initialized } = useAuth();
+  const { isAuthenticated, user, initialized, logout } = useAuth();
   const location = useLocation();
 
   if (!initialized) {
@@ -19,7 +19,8 @@ const ProtectedRoute: React.FC<{ children: JSX.Element; role?: Role }> = ({ chil
   }
 
   if (role && user?.role !== role) {
-    return <Navigate to={user?.role === 'ADMIN' ? '/admin' : '/dashboard'} replace />;
+    logout();
+    return <Navigate to="/login" replace state={{ from: location, message: '请使用管理员账号登录' }} />;
   }
 
   return children;
