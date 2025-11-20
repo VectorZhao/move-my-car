@@ -50,10 +50,6 @@ const LoginPage = () => {
             {loading ? '正在登录...' : '进入系统'}
           </button>
         </form>
-        <div style={{ marginTop: '1rem', color: 'rgba(255,255,255,0.65)' }}>
-          <p style={{ margin: '0 0 0.5rem' }}>默认管理员：<strong>admin / admin</strong>，首次登录后请立即在后台修改密码。</p>
-          <p style={{ margin: 0 }}>如需开通车主账号，请联系管理员。</p>
-        </div>
       </div>
     </div>
   );
