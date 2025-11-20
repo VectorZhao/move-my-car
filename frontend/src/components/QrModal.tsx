@@ -23,12 +23,47 @@ const QrModal: React.FC<Props> = ({ qrUrl, onClose }) => {
       }}
       onClick={onClose}
     >
-      <div className="glass-card" style={{ padding: '1.5rem', textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
-        <h3 style={{ marginTop: 0 }}>二维码</h3>
-        <img src={qrUrl} alt="QR" style={{ width: '260px', height: '260px' }} />
-        <button className="primary" style={{ marginTop: '1rem' }} onClick={onClose}>
-          关闭
-        </button>
+      <div
+        className="glass-card"
+        style={{
+          padding: '1.75rem',
+          textAlign: 'center',
+          minWidth: 360,
+          maxWidth: '90vw',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          alignItems: 'center'
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3 style={{ margin: 0, letterSpacing: '0.05em' }}>二维码</h3>
+        <div
+          style={{
+            background: '#fff',
+            padding: '1rem',
+            borderRadius: 12,
+            boxShadow: '0 20px 60px rgba(0,0,0,0.35)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <img src={qrUrl} alt="QR" style={{ width: '260px', height: '260px' }} />
+        </div>
+        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+          <a
+            href={qrUrl}
+            download="move-my-car-qr.png"
+            className="primary"
+            style={{ textDecoration: 'none', padding: '0.8rem 1.6rem', borderRadius: 999, display: 'inline-block' }}
+          >
+            保存
+          </a>
+          <button className="primary" style={{ padding: '0.8rem 1.6rem' }} onClick={onClose}>
+            关闭
+          </button>
+        </div>
       </div>
     </div>
   );
