@@ -79,12 +79,6 @@ npm run dev
 - **UI**：React 18、Vite、React Router、Axios、自定义玻璃拟态设计
 - **部署**：Docker、docker-compose、Nginx（前端静态资源，监听 5200）
 
-## 后续扩展建议
-- 初次登录默认管理员账号（admin / admin）后，请立即在后台修改密码，确保安全。
-- 接入短信/语音等通知方式，真正做到“自动通知车主”。
-- 新增 Webhook / IFTTT 连接，联动门禁或广播系统。
-- 引入多组织/多停车场配置，支持更复杂的权限模型。
-
 > Docker 部署默认数据在容器内 `/app/data/move-my-car.db`（挂载到当前目录的 `./data`），本地开发可用 `file:./data/move-my-car.db`，请做好备份或挂载到持久化存储。
 
 祝你部署顺利 🚗💨
