@@ -290,7 +290,19 @@ const UserDashboard = () => {
                   <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                     <button
                       type="button"
-                      style={{ flex: 1, minWidth: '120px', padding: '0.35rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                      style={{
+                        flex: 1,
+                        minWidth: '120px',
+                        padding: '0.5rem 0.75rem',
+                        borderRadius: '14px',
+                        border: '1px solid rgba(255,255,255,0.12)',
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.07))',
+                        color: '#fff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        backdropFilter: 'blur(10px)'
+                      }}
                       onClick={() => handleToggle(vehicle, 'notifyEnabled')}
                     >
                       <span>{vehicle.notifyEnabled ? '关闭通知' : '开启通知'}</span>
@@ -298,7 +310,19 @@ const UserDashboard = () => {
                     </button>
                     <button
                       type="button"
-                      style={{ flex: 1, minWidth: '120px', padding: '0.35rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                      style={{
+                        flex: 1,
+                        minWidth: '120px',
+                        padding: '0.5rem 0.75rem',
+                        borderRadius: '14px',
+                        border: '1px solid rgba(255,255,255,0.12)',
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.07))',
+                        color: '#fff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        backdropFilter: 'blur(10px)'
+                      }}
                       onClick={() => handleToggle(vehicle, 'callEnabled')}
                     >
                       <span>{vehicle.callEnabled ? '关闭电话' : '开启电话'}</span>
