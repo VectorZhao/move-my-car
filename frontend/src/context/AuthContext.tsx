@@ -12,7 +12,8 @@ interface AuthState {
   initialized: boolean;
 }
 
-const sessionKey = 'mmc_session_v1';
+const sessionVersion = import.meta.env.VITE_SESSION_VERSION ?? 'v2';
+const sessionKey = `mmc_session_${sessionVersion}`;
 
 const AuthContext = createContext<AuthState | undefined>(undefined);
 
@@ -22,6 +23,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
+    // 清理旧版 session，避免部署后仍持有历史登录态
+    Object.keys(localStorage)
+      .filter((key) => key.startsWith('mmc_session_') && key !== sessionKey)
+      .forEach((key) => localStorage.removeItem(key));
+
     const saved = localStorage.getItem(sessionKey);
     if (saved) {
       const parsed = JSON.parse(saved) as AuthResponse;
