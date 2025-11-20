@@ -2,7 +2,7 @@ services:
   api:
     image: vectorzhao/move-my-car-api:latest
     env_file:
-      - backend/.env
+      - .env
     environment:
       DATABASE_URL: file:/app/data/move-my-car.db
       CLIENT_URL: http://localhost:5200
@@ -16,6 +16,6 @@ services:
     depends_on:
       - api
     env_file:
-      - frontend/.env
+      - .env
     ports:
       - '5200:5200'

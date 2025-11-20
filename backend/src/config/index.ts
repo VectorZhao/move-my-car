@@ -1,6 +1,13 @@
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootEnvPath = path.resolve(__dirname, '../../..', '.env');
+const backendEnvPath = path.resolve(__dirname, '../../.env');
+
+dotenv.config({ path: rootEnvPath });
+dotenv.config({ path: backendEnvPath });
 
 const missing: string[] = [];
 if (!process.env.JWT_SECRET) missing.push('JWT_SECRET');

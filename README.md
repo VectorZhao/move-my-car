@@ -22,13 +22,12 @@ move-my-car/
 ```
 
 ## 快速开始（Docker）
-1. **准备环境变量**
+1. **准备环境变量（单一 `.env`）**
    ```bash
-   cp backend/.env.example backend/.env
-   cp frontend/.env.example frontend/.env
+   cp .env.example .env
    mkdir -p data
    ```
-   根据需要修改 `backend/.env` 中的 `JWT_SECRET`、`ADMIN_USERNAME`、`ADMIN_PASSWORD` 等字段，确保安全性。
+   `.env` 放在仓库根目录即可同时被 API 和前端使用，可修改其中的 `JWT_SECRET`、`ADMIN_USERNAME`、`ADMIN_PASSWORD` 等字段确保安全。
 
 2. **启动服务**
    ```bash
@@ -49,11 +48,12 @@ move-my-car/
    ```
 
 ## 本地开发
+在仓库根目录准备好 `.env`（`cp .env.example .env`），后端会自动读取根目录和 `backend/.env`（如有）并以本地文件覆盖根目录配置，前端也会从根目录 `.env` 读取 `VITE_` 变量。
+
 ### Backend
 ```bash
 cd backend
 npm install
-cp .env.example .env  # 自行调整数据库连接
 npx prisma migrate dev
 npm run dev
 ```
@@ -78,7 +78,6 @@ API 默认运行在 `http://localhost:4000`，使用 `DATABASE_URL=file:./data/m
 ```bash
 cd frontend
 npm install
-cp .env.example .env
 npm run dev
 ```
 前端开发服务器地址为 `http://localhost:5173`，并通过 `VITE_API_URL` 调用 API。
