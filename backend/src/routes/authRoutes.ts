@@ -53,4 +53,28 @@ router.get('/me', authenticate(), (req: AuthenticatedRequest, res) => {
   return res.json({ success: true, user: req.user });
 });
 
+const passwordSchema = z.object({
+  oldPassword: z.string().min(4),
+  newPassword: z.string().min(6)
+});
+
+router.post('/password', authenticate(), async (req: AuthenticatedRequest, res, next) => {
+  try {
+    const { oldPassword, newPassword } = passwordSchema.parse(req.body);
+    const user = await prisma.user.findUnique({ where: { id: req.user!.id } });
+    if (!user) {
+      throw new HttpError(404, '用户不存在');
+    }
+    const isValid = await comparePassword(oldPassword, user.passwordHash);
+    if (!isValid) {
+      throw new HttpError(400, '旧密码错误');
+    }
+    const passwordHash = await hashPassword(newPassword);
+    await prisma.user.update({ where: { id: user.id }, data: { passwordHash } });
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

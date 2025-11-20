@@ -11,6 +11,7 @@ import {
   regenerateShareCode
 } from '../api/vehicles';
 import { NotifyTypeOption, VehicleRecord } from '../types';
+import { changePasswordRequest } from '../api/auth';
 
 const defaultForm = {
   label: '',
@@ -34,9 +35,33 @@ const UserDashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [pwdOld, setPwdOld] = useState('');
+  const [pwdNew, setPwdNew] = useState('');
+  const [pwdSaving, setPwdSaving] = useState(false);
+  const [pwdMsg, setPwdMsg] = useState<string | null>(null);
 
   const toggleField = (field: 'notifyEnabled' | 'callEnabled', value: boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handlePasswordChange = async (event: FormEvent) => {
+    event.preventDefault();
+    setPwdMsg(null);
+    setPwdSaving(true);
+    try {
+      if (!pwdOld || !pwdNew) {
+        setPwdMsg('请填写完整');
+        return;
+      }
+      await changePasswordRequest(pwdOld, pwdNew);
+      setPwdMsg('密码已更新');
+      setPwdOld('');
+      setPwdNew('');
+    } catch (err) {
+      setPwdMsg(err instanceof Error ? err.message : '修改失败');
+    } finally {
+      setPwdSaving(false);
+    }
   };
 
   useEffect(() => {
@@ -222,6 +247,28 @@ const UserDashboard = () => {
                   取消编辑
                 </button>
               )}
+            </div>
+          </form>
+        </section>
+
+        <section className="glass-card">
+          <h3 style={{ marginTop: 0 }}>账号安全</h3>
+          <form onSubmit={handlePasswordChange} style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', marginTop: '1rem' }}>
+            <label>
+              <span>当前密码</span>
+              <input type="password" value={pwdOld} onChange={(e) => setPwdOld(e.target.value)} placeholder="请输入当前密码" required />
+            </label>
+            <label>
+              <span>新密码</span>
+              <input type="password" value={pwdNew} onChange={(e) => setPwdNew(e.target.value)} placeholder="至少 6 位" required />
+            </label>
+            {pwdMsg && (
+              <div style={{ gridColumn: '1 / -1', color: pwdMsg.includes('已') ? '#7ed957' : '#ff6b81' }}>{pwdMsg}</div>
+            )}
+            <div style={{ gridColumn: '1 / -1' }}>
+              <button className="primary" type="submit" disabled={pwdSaving}>
+                {pwdSaving ? '保存中...' : '修改密码'}
+              </button>
             </div>
           </form>
         </section>
