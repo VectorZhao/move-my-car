@@ -4,6 +4,7 @@
   background-color: #05060a;
   line-height: 1.5;
   font-weight: 400;
+  color-scheme: dark;
 }
 
 * {
@@ -55,6 +56,9 @@ select {
   color: #f8fbff;
   font-size: 1rem;
   transition: border 0.2s ease, background 0.2s ease;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 input:focus,
@@ -63,6 +67,11 @@ select:focus {
   outline: none;
   border-color: rgba(78, 212, 255, 0.8);
   background: rgba(255, 255, 255, 0.08);
+}
+
+select option {
+  background: #0c1020;
+  color: #f8fbff;
 }
 
 a {
