@@ -59,14 +59,12 @@ API 默认运行在 `http://localhost:4000`，使用 `DATABASE_URL=file:./data/m
 
 ### 通知方式格式参考
 
-| 渠道 | `notifyConfig` 示例 |
-| --- | --- |
-| Bark | `token|sound|url|level|volume|call`；`url` 为 Bark 服务地址（只需写到域名，系统会自动补上 `/push`），其余参数见 [官方教程](https://bark.day.app/#/tutorial)。默认：`level=critical`、`volume=1`（0-10），`call=1`（循环播放，传 `0` 关闭）。`level` 可选 critical/active/timeSensitive/passive |
-| WxPusher | `AT_xxxxxx|UID_xxxxxx` |
-| 飞书机器人 | `token`（Webhook 链接末尾） |
-| 企业微信机器人 | `token`（Webhook 链接末尾） |
-| 钉钉机器人 | `token`（Webhook 链接末尾） |
-| OneBot / NapCat / Lagrange | `http://host:port/send_private_msg|access_token|接收人ID` |
+- **Bark**：`token|sound|url|level|volume|call`；`url` 写 Bark 服务域名（自动补 `/push`），默认 `level=critical`、`volume=1`（0-10）、`call=1`（循环播放，传 `0` 关闭），`level` 可选 critical/active/timeSensitive/passive。
+- **WxPusher**：`AT_xxxxxx|UID_xxxxxx`
+- **飞书机器人**：`token`（Webhook 链接末尾）
+- **企业微信机器人**：`token`（Webhook 链接末尾）
+- **钉钉机器人**：`token`（Webhook 链接末尾）
+- **OneBot / NapCat / Lagrange**：`http://host:port/send_private_msg|access_token|接收人ID`
 
 ### Frontend
 ```bash
