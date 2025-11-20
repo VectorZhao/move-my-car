@@ -61,7 +61,7 @@ API 默认运行在 `http://localhost:4000`，使用 `DATABASE_URL=file:./data/m
 
 | 渠道 | `notifyConfig` 示例 |
 | --- | --- |
-| Bark | `token|sound|url|level|volume|badge|call`；`url` 为 Bark 服务地址（只需写到域名，系统会自动补上 `/push`），其余参数见 [官方教程](https://bark.day.app/#/tutorial)，`level` 支持 critical/active/timeSensitive/passive，`volume` 0-10，`call` 传 `1` 时循环播放 |
+| Bark | `token|sound|url|level|volume|call`；`url` 为 Bark 服务地址（只需写到域名，系统会自动补上 `/push`），其余参数见 [官方教程](https://bark.day.app/#/tutorial)，`level` 默认 critical，`volume` 默认 1（0-10），`call` 默认 1（循环播放），`level` 支持 critical/active/timeSensitive/passive |
 | WxPusher | `AT_xxxxxx|UID_xxxxxx` |
 | 飞书机器人 | `token`（Webhook 链接末尾） |
 | 企业微信机器人 | `token`（Webhook 链接末尾） |

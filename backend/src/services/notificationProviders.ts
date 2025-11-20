@@ -44,7 +44,7 @@ const getJson = async (url: string) => {
 };
 
 const bark = async (configString: string, payload: NotificationPayload): Promise<NotificationResult> => {
-  const [tokenRaw, soundRaw, urlRaw, levelRaw, volumeRaw, badgeRaw, callRaw] = configString.split('|');
+  const [tokenRaw, soundRaw, urlRaw, levelRaw, volumeRaw, callRaw] = configString.split('|');
   const token = tokenRaw?.trim();
   if (!token) {
     throw new Error('Bark token 未填写');
@@ -63,11 +63,10 @@ const bark = async (configString: string, payload: NotificationPayload): Promise
   }
   const normalizedEndpoint = `${cleaned}/push`;
   const allowedLevels = ['critical', 'active', 'timeSensitive', 'passive'];
-  const level = allowedLevels.includes(levelRaw?.trim() ?? '') ? levelRaw!.trim() : 'active';
+  const level = allowedLevels.includes(levelRaw?.trim() ?? '') ? levelRaw!.trim() : 'critical';
   const vol = Number(volumeRaw);
-  const volume = Number.isFinite(vol) ? Math.min(10, Math.max(0, vol)) : 5;
-  const badge = badgeRaw?.trim() ? Number(badgeRaw.trim()) : undefined;
-  const call = callRaw?.trim() === '1' ? '1' : undefined;
+  const volume = Number.isFinite(vol) ? Math.min(10, Math.max(0, vol)) : 1;
+  const call = callRaw?.trim() === '0' ? undefined : '1';
   const data = await postJson(normalizedEndpoint, {
     body: payload.message,
     title: '挪车通知',
@@ -76,7 +75,6 @@ const bark = async (configString: string, payload: NotificationPayload): Promise
     group: 'MoveMyCar',
     level,
     volume,
-    badge,
     call
   });
   if (data.code === 200) {
@@ -162,7 +160,7 @@ const oneBot = async (configString: string, payload: NotificationPayload): Promi
 };
 
 export const notificationProviders: NotificationProviderMeta[] = [
-  { id: 'BARK', name: 'Bark', hint: 'token|sound|url|level|volume|badge|call（详见 Bark 文档）' },
+  { id: 'BARK', name: 'Bark', hint: 'token|sound|url|level|volume|call（level 默认 critical, volume 默认 1, call 默认 1）' },
   { id: 'WX_PUSHER', name: 'WxPusher', hint: 'AT_xxx|UID_xxx' },
   { id: 'FEISHU_BOT', name: '飞书机器人', hint: 'Webhook token' },
   { id: 'WECHAT_WORK_BOT', name: '企业微信机器人', hint: 'Webhook token' },

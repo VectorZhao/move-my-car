@@ -106,6 +106,16 @@ const UserDashboard = () => {
     setVehicles((prev) => prev.map((item) => (item.id === vehicle.id ? updated : item)));
   };
 
+  const handleCopy = async (url: string) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setSuccess('链接已复制');
+      setTimeout(() => setSuccess(null), 2000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '复制失败');
+    }
+  };
+
   const showQr = async (vehicle: VehicleRecord) => {
     const dataUrl = await QRCode.toDataURL(vehicle.shareUrl, { width: 320 });
     setQrUrl(dataUrl);
@@ -159,7 +169,7 @@ const UserDashboard = () => {
                 value={form.notifyConfig}
                 onChange={(e) => setForm((prev) => ({ ...prev, notifyConfig: e.target.value }))}
                 required
-                placeholder="例如：token|sound|url|level|volume|badge|call"
+                placeholder="例如：token|sound|url|level|volume|call"
               />
             </label>
             <label>
@@ -236,7 +246,7 @@ const UserDashboard = () => {
                       type="button"
                       className="primary"
                       style={{ padding: '0.4rem 0.9rem' }}
-                      onClick={() => navigator.clipboard.writeText(vehicle.shareUrl)}
+                      onClick={() => handleCopy(vehicle.shareUrl)}
                     >
                       复制链接
                     </button>
