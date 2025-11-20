@@ -52,15 +52,19 @@ const QrModal: React.FC<Props> = ({ qrUrl, onClose }) => {
           <img src={qrUrl} alt="QR" style={{ width: '260px', height: '260px' }} />
         </div>
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
-          <a
-            href={qrUrl}
-            download="move-my-car-qr.png"
+          <button
             className="primary"
-            style={{ textDecoration: 'none', padding: '0.8rem 1.6rem', borderRadius: 999, display: 'inline-block' }}
+            style={{ padding: '0.85rem 1.8rem', borderRadius: 999 }}
+            onClick={() => {
+              const link = document.createElement('a');
+              link.href = qrUrl;
+              link.download = 'move-my-car-qr.png';
+              link.click();
+            }}
           >
             保存
-          </a>
-          <button className="primary" style={{ padding: '0.8rem 1.6rem' }} onClick={onClose}>
+          </button>
+          <button className="primary" style={{ padding: '0.85rem 1.8rem' }} onClick={onClose}>
             关闭
           </button>
         </div>
