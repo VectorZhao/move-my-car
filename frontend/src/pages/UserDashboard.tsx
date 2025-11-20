@@ -33,6 +33,7 @@ const UserDashboard = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -109,8 +110,8 @@ const UserDashboard = () => {
   const handleCopy = async (url: string) => {
     try {
       await navigator.clipboard.writeText(url);
-      setSuccess('链接已复制');
-      setTimeout(() => setSuccess(null), 2000);
+      setToast('链接已复制');
+      setTimeout(() => setToast(null), 2000);
     } catch (err) {
       setError(err instanceof Error ? err.message : '复制失败');
     }
@@ -126,6 +127,24 @@ const UserDashboard = () => {
 
   return (
     <div className="main-content" style={{ alignItems: 'flex-start' }}>
+      {toast && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '1.5rem',
+            right: '1.5rem',
+            background: 'rgba(15, 23, 42, 0.88)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            color: '#e8f4ff',
+            padding: '0.75rem 1.1rem',
+            borderRadius: 12,
+            boxShadow: '0 20px 60px rgba(0,0,0,0.35)',
+            zIndex: 10000
+          }}
+        >
+          {toast}
+        </div>
+      )}
       <div style={{ width: '100%', maxWidth: 1200, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         <header className="glass-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
