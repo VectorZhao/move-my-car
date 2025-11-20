@@ -7,6 +7,7 @@ services:
       - ./data:/app/data
     ports:
       - '${PORT:-4000}:${PORT:-4000}'
+    command: sh -c "npx prisma migrate deploy && npm run prisma:seed && node dist/server.js"
 
   web:
     image: vectorzhao/move-my-car-web:latest

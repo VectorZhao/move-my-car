@@ -21,7 +21,7 @@ move-my-car/
 └── README.md
 ```
 
-## 快速开始（Docker）
+## 快速开始（Docker，一条命令即可）
 1. **准备环境变量（单一 `.env`）**
    ```bash
    cp .env.example .env
@@ -29,18 +29,11 @@ move-my-car/
    ```
    `.env` 放在仓库根目录即可同时被 API 和前端使用。必需字段：`DATABASE_URL`（Prisma 连接，默认 `./data/move-my-car.db`）、`JWT_SECRET` 和管理员初始账号/密码。`PORT`、`CLIENT_URL`、`WEB_PORT` 可留空使用默认 4000/5200。
 
-2. **启动服务**
+2. **启动服务（自动迁移+种子）**
    ```bash
    docker compose up --build -d
    ```
-   需要改端口时可在 `.env` 设置 `PORT`（API）和 `WEB_PORT`（前端映射端口），`docker-compose.yml` 会自动应用。
-
-3. **初始化数据库**（首次部署）
-   ```bash
-   docker compose run --rm api npx prisma migrate deploy
-   docker compose run --rm api npm run prisma:seed
-   ```
-完成后即可使用 `.env` 中配置的管理员账号登录 `http://localhost:5200/admin`（默认 `admin / admin`）。
+   `docker-compose.yml` 已内置 `npx prisma migrate deploy && npm run prisma:seed`，首次/每次启动会先确保数据库结构和管理员账号就绪，无需额外手工步骤。需要改端口时在 `.env` 设置 `PORT`（API）和 `WEB_PORT`（前端映射端口）。
 
 4. **调试 / 查看日志**
    ```bash
